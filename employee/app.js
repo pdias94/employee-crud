@@ -1,8 +1,18 @@
+/**
+ * @author Pedro Dias (https://github.com/pdias94)
+ */
+
 'use strict'
 
 const databaseHandler = require('./model/databaseHandler');
 const statusEnum = require('./utils/enum/statusCode');
 
+/**
+ * 
+ * @param http event 
+ * @returns statusCode
+ * @returns body
+ */
 exports.lambdaHandler = async (event) => {
 	switch(event.httpMethod) {
 		case 'POST':
@@ -16,6 +26,12 @@ exports.lambdaHandler = async (event) => {
 	}
 };
 
+/**
+ * Cria funcionário
+ * 
+ * @param event 
+ * @returns objeto de resposta lambda
+ */
 async function addEmployee(event) {
 	let employeeData = JSON.parse(event.body);
 
@@ -41,6 +57,11 @@ async function addEmployee(event) {
 	}
 }
 
+/**
+ * Lista todos os funcionários
+ * 
+ * @returns objeto de resposta lambda
+ */
 async function getEmployees() {
 	try {
 		const data = await databaseHandler.getAll();
@@ -58,6 +79,12 @@ async function getEmployees() {
 	}
 }
 
+/**
+ * Atualiza funcionário
+ * 
+ * @param event 
+ * @returns objeto de resposta lambda
+ */
 async function updateEmployee(event) {
 	let employeeData = JSON.parse(event.body);
 
@@ -84,6 +111,12 @@ async function updateEmployee(event) {
 	}
 }
 
+/**
+ * Atualiza funcionário
+ * 
+ * @param event 
+ * @returns objeto de resposta lambda
+ */
 async function deleteEmployee(event) {
 	let employeeData = JSON.parse(event.body);
 

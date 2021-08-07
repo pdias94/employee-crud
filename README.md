@@ -35,3 +35,4 @@ Na pasta raíz deste projeto se encontra o arquivo ``requests.json`` no formato 
 
 ## TODO
 - Implementação de testes utilizando JEST
+- Implementação função de validação de parâmetros obrigatórios para cada endpoint

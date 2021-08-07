@@ -1,3 +1,7 @@
+/**
+ * @author Pedro Dias (https://github.com/pdias94)
+ */
+
 'use-strict'
 
 const { v4: uuidv4 } = require('uuid');
@@ -7,6 +11,10 @@ let ddb = new AWS.DynamoDB.DocumentClient();
 
 const TABLE_NAME = process.env.TABLE_NAME;
 
+/**
+ * 
+ * @param item objeto para criação no DynamoDB
+ */
 module.exports.save = async item => {
   item.Id = uuidv4();
 
@@ -18,6 +26,10 @@ module.exports.save = async item => {
   await ddb.put(params).promise();
 }
 
+/**
+ * 
+ * @returns lista de funcionários no DynamoDB
+ */
 module.exports.getAll = async () => {
     const data = await ddb.scan({
       TableName: TABLE_NAME
@@ -26,6 +38,10 @@ module.exports.getAll = async () => {
     return data.Items;
 }
 
+/**
+ * 
+ * @param item objeto para atualização no DynamoDB
+ */
 module.exports.update = async item => {
   const params = {
     TableName: TABLE_NAME,
@@ -43,6 +59,10 @@ module.exports.update = async item => {
   await ddb.update(params).promise();
 }
 
+/**
+ * 
+ * @param item objeto para deleção no DynamoDB
+ */
 module.exports.delete = async item => {
   await ddb.delete({
     TableName: TABLE_NAME,
