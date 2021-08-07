@@ -1,0 +1,57 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  crud api for employees
+  
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  employeeTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: employeeTable
+      AttributeDefinitions:
+        - AttributeName: Id
+          AttributeType: S
+      KeySchema: 
+        - AttributeName: Id
+          KeyType: HASH
+      ProvisionedThroughput: 
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+
+  EmployeeFunction:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      CodeUri: employee/
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Environment:
+        Variables:
+          TABLE_NAME: employeeTable
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: employeeTable
+      Events:
+        EmployeeAdd:
+          Type: Api
+          Properties:
+            Path: /employee
+            Method: post
+        EmployeesGet:
+          Type: Api
+          Properties:
+            Path: /employee
+            Method: get
+        EmployeeUpdate:
+          Type: Api
+          Properties:
+            Path: /employee
+            Method: put
+        EmployeeDelete:
+          Type: Api
+          Properties:
+            Path: /employee
+            Method: delete
